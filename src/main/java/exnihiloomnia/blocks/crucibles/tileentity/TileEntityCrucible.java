@@ -128,13 +128,14 @@ public class TileEntityCrucible extends TileEntity implements ITickable{
 	public void update() {
 		CrucibleRegistryEntry entry = CrucibleRegistry.getItem(item);
 		//remove stuff if is no longer valid eg config change
-        if (getFluid() != null && item != null) {
-            if (entry == null) {
-                this.solidContent = 0;
-                this.item = null;
-                if (!CrucibleRegistry.containsFluid(this.getFluid().getFluid()))
-                    getTank().setFluid(null);
-            }
+        if (entry == null) {
+            this.solidContent = 0;
+            this.item = null;
+            this.solidContentProcessed = 0;
+        }
+        if (getFluid() != null && !CrucibleRegistry.containsFluid(this.getFluid().getFluid())) {
+            getTank().setFluid(null);
+            this.solidContentProcessed = 0;
         }
         
 		//process solids
@@ -157,7 +158,7 @@ public class TileEntityCrucible extends TileEntity implements ITickable{
 		}
 		
 		//transfer solids to fluids
-        if (getFluid() != null) {
+        if (getFluid() != null && entry != null) {
             while (getFluid().amount < getTank().getCapacity() && this.solidContentProcessed >= solidFluidExchangeRate) {
                 this.solidContentProcessed -= solidFluidExchangeRate;
                 getFluid().amount += entry.getRatio();
