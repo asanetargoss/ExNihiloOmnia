@@ -14,6 +14,8 @@ import net.minecraft.util.math.BlockPos;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.collect.ImmutableList;
+
 public class HammerRegistryEntry {
 	private final IBlockState input;
 	private EnumMetadataBehavior behavior = EnumMetadataBehavior.SPECIFIC;
@@ -74,7 +76,16 @@ public class HammerRegistryEntry {
 		Block block = Block.REGISTRY.getObject(new ResourceLocation(recipe.getId()));
 
 		if (block != null) {
-			IBlockState state = block.getBlockState().getBaseState();
+			IBlockState state = null;
+			
+			ImmutableList<IBlockState> allStates = block.getBlockState().getValidStates();
+			int blockMeta = recipe.getMeta();
+			if (blockMeta < allStates.size() && blockMeta >= 0) {
+				state = allStates.get(blockMeta);
+			}
+			else {
+				state = block.getBlockState().getBaseState();
+			}
 
 			if (state != null) {
 				HammerRegistryEntry entry = new HammerRegistryEntry(state, recipe.getBehavior());
