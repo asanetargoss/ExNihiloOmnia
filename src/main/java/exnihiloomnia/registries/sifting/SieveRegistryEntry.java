@@ -11,6 +11,8 @@ import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 
+import com.google.common.collect.ImmutableList;
+
 @SuppressWarnings("deprecation")
 public class SieveRegistryEntry {
 	private final IBlockState input;
@@ -53,7 +55,17 @@ public class SieveRegistryEntry {
 		Block block = Block.REGISTRY.getObject(new ResourceLocation(recipe.getId()));
 
 		if (block != null) {
-			IBlockState state = recipe.getBehavior() == EnumMetadataBehavior.SPECIFIC ? block.getStateFromMeta(recipe.getMeta()) : block.getDefaultState();
+			IBlockState state = null;
+			
+			ImmutableList<IBlockState> allStates = block.getBlockState().getValidStates();
+			int blockMeta = recipe.getMeta();
+			if (recipe.getBehavior() == EnumMetadataBehavior.SPECIFIC &&
+					blockMeta < allStates.size() && blockMeta >= 0) {
+				state = allStates.get(blockMeta);
+			}
+			else {
+				state = block.getBlockState().getBaseState();
+			}
 
 			if (state != null) {
 				SieveRegistryEntry entry = new SieveRegistryEntry(state, recipe.getBehavior());
