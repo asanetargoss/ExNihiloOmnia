@@ -80,7 +80,8 @@ public class HammerRegistryEntry {
 			
 			ImmutableList<IBlockState> allStates = block.getBlockState().getValidStates();
 			int blockMeta = recipe.getMeta();
-			if (blockMeta < allStates.size() && blockMeta >= 0) {
+			if (recipe.getBehavior() == EnumMetadataBehavior.SPECIFIC &&
+					blockMeta < allStates.size() && blockMeta >= 0) {
 				state = allStates.get(blockMeta);
 			}
 			else {
