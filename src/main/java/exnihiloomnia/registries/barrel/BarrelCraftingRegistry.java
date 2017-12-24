@@ -32,8 +32,10 @@ public class BarrelCraftingRegistry implements IRegistry<BarrelCraftingTrigger> 
     @Override
     public void initialize() {
         clear();
-
-        loadDefaults();
+        
+        if (ENORegistries.loadBarrelDefaults) {
+        	loadDefaults();
+        }
 
         if (ENORegistries.dumpRegistries)
             BarrelCraftingRecipeLoader.dumpRecipes(entries, path);

@@ -1,6 +1,7 @@
 package exnihiloomnia.registries;
 
 import exnihiloomnia.ENO;
+import exnihiloomnia.registries.barrel.BarrelCraftingRegistry;
 import exnihiloomnia.registries.composting.CompostRegistry;
 import exnihiloomnia.registries.crook.CrookRegistry;
 import exnihiloomnia.registries.crucible.CrucibleRegistry;
@@ -48,7 +49,7 @@ public class CommandRegistry extends CommandBase {
         if (args.length == 1)
             return  getListOfStringsMatchingLastWord(args, "reload", "clear", "load");
         else if (args.length == 2)
-            return getListOfStringsMatchingLastWord(args, "heat", "crucible", "sieve", "hammer", "compost", "crook");
+            return getListOfStringsMatchingLastWord(args, "heat", "crucible", "sieve", "hammer", "compost", "crook", "barrel");
         else
             return Collections.emptyList();
     }
@@ -114,6 +115,8 @@ public class CommandRegistry extends CommandBase {
                 return CompostRegistry.INSTANCE;
             case "crook":
                 return CrookRegistry.INSTANCE;
+            case "barrel":
+                return BarrelCraftingRegistry.INSTANCE;
             default:
                 return null;
         }

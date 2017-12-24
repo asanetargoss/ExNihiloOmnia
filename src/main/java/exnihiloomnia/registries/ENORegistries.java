@@ -1,5 +1,6 @@
 package exnihiloomnia.registries;
 
+import exnihiloomnia.registries.barrel.BarrelCraftingRegistry;
 import exnihiloomnia.registries.composting.CompostRegistry;
 import exnihiloomnia.registries.crook.CrookRegistry;
 import exnihiloomnia.registries.crucible.CrucibleRegistry;
@@ -21,6 +22,7 @@ public class ENORegistries {
 	public static boolean loadSieveDefaults = true;
 	public static boolean loadHeatDefaults = true;
 	public static boolean loadCrucibleDefaults = true;
+	public static boolean loadBarrelDefaults = true;
 
 	public static boolean loadSieveOres = true;
 	public static boolean loadHammerOres = true;
@@ -35,6 +37,7 @@ public class ENORegistries {
 		loadSieveDefaults = config.get(CATEGORY_DEFAULT_RECIPES, "load default sieve recipes", true).getBoolean(true);
         loadCrucibleDefaults = config.get(CATEGORY_DEFAULT_RECIPES, "load default melting recipes", true).getBoolean(true);
         loadHeatDefaults = config.get(CATEGORY_DEFAULT_RECIPES, "load default heat indexes", true).getBoolean(true);
+        loadBarrelDefaults = config.get(CATEGORY_DEFAULT_RECIPES, "load default barrel recipes", true).getBoolean(true);
 
 		loadSieveOres = config.get(CATEGORY_ORE_RECIPES, "load ex nihilo ore sieve recipes", true).getBoolean(true);
 		loadHammerOres = config.get(CATEGORY_ORE_RECIPES, "load ex nihilo ore hammer recipes", true).getBoolean(true);
@@ -47,6 +50,7 @@ public class ENORegistries {
 		SieveRegistry.INSTANCE.initialize();
 		HeatRegistry.INSTANCE.initialize();
 		CrucibleRegistry.INSTANCE.initialize();
+		BarrelCraftingRegistry.INSTANCE.initialize();
 	}
 
 	public static void clear() {
@@ -56,5 +60,6 @@ public class ENORegistries {
 		SieveRegistry.INSTANCE.clear();
 		HeatRegistry.INSTANCE.clear();
 		CrucibleRegistry.INSTANCE.clear();
+		BarrelCraftingRegistry.INSTANCE.clear();
 	}
 }
